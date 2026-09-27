@@ -12,11 +12,8 @@ public class AuthorizationService {
         this.userRepository = userRepository;
     }
 
-    List<Authorities> getAuthorities(String user, String password) throws UnauthorizedUser {
-        if (isEmpty(user) || isEmpty(password)) {
-            throw new InvalidCredentials("User name or password is empty");
-        }
-        List<Authorities> userAuthorities = userRepository.getUserAuthorities(user, password);
+    List<Authorities> getAuthorities(User user) throws UnauthorizedUser {
+        List<Authorities> userAuthorities = userRepository.getUserAuthorities(user.getUser(), user.getPassword());
         if (isEmpty(userAuthorities)) {
             throw new UnauthorizedUser("Unknown user " + user);
         }
